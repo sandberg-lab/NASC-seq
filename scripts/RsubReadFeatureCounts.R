@@ -1,0 +1,8 @@
+#!/mnt/kauffman/hendgert/Programs/R/R-3.5.1/bin/Rscript
+
+## Calls on Chris' installation of R and Rscript (which is version 3.4.3)
+args <- commandArgs(trailingOnly=TRUE)
+library(Rsubread)
+cellname <- paste(strsplit(basename(args[1]),'_')[[1]][1],strsplit(basename(args[1]),'_')[[1]][2],strsplit(basename(args[1]),'_')[[1]][3],sep="_")
+obj <- featureCounts(args[1],annot.ext=args[2],reportReadsPath=args[3],reportReads='BAM',isGTFAnnotationFile=TRUE,isPairedEnd=TRUE,requireBothEndsMapped=TRUE,ignoreDup=TRUE,countChimericFragments=FALSE,autosort=TRUE)
+saveRDS(obj,paste0(args[3],'/',cellname,'_featureCountsOutput.rds'))
