@@ -325,7 +325,7 @@ if o.flag=='prepareData':
 if o.flag=='processData':
 	safe_mkdir(os.path.join(o.experimentdir,outfiles,'outPickles'))
 	pklfile = os.path.join(o.experimentdir,outfiles,'PklList.txt')
-	indir = os.path.join(o.experimentdir,outfiles,pklfile)
+	indir = os.path.join(o.experimentdir,outfiles,pklfiles)
 	makePickleList(indir,pklfile)
 	outfile = os.path.join(o.experimentdir,outfiles,'pi_g_results_.pkl')
 	logfile_pi_g = os.path.join(o.experimentdir,outfiles,'logfile_.txt')
