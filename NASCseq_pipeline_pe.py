@@ -219,7 +219,7 @@ if o.flag=='vcfFilter':
 	outdir = os.path.join(o.experimentdir,qcfiles,vcfFilter)
 	posratioCutoff = cutoffs['posratioCutoff']
 	cellnumberCutoff = cutoffs['cellnumberCutoff']
-	cmd=[os.path.join(rootDir,'scripts/vcfFilter.R'),indir,outdir,str(posratioCutoff),str(cellnumberCutoff)]
+	cmd=[RscriptDist,os.path.join(rootDir,'scripts/vcfFilter.R'),indir,outdir,str(posratioCutoff),str(cellnumberCutoff)]
 	commandlogfile.write('%s\n' % cmd)
 	run_cmd(cmd)
 
@@ -261,7 +261,7 @@ if o.flag=='cellQC':
 	outdir=os.path.join(o.experimentdir,qcfiles,featurecountQC)
 	print ('rds location path = %r')%rdslocationpath
 	print ('outdir = %r')%outdir
-	cmd=[os.path.join(rootDir,'scripts/cellQC.R'),rdslocationpath,outdir]
+	cmd=[RscriptDist,os.path.join(rootDir,'scripts/cellQC.R'),rdslocationpath,outdir]
 	commandlogfile.write('%s\n' % cmd)
 	run_cmd(cmd)
 
@@ -275,7 +275,7 @@ if o.flag=='cellFilter':
 	totalReads=cutoffs['totalReads']
 	assignedReads=cutoffs['assignedReads']
 	percentageAssigned=cutoffs['percentageAssigned']
-	cmd=[os.path.join(rootDir,'scripts/cellFilter.R'),infile,outfile,str(totalReads),str(assignedReads),str(percentageAssigned)]
+	cmd=[RscriptDist,os.path.join(rootDir,'scripts/cellFilter.R'),infile,outfile,str(totalReads),str(assignedReads),str(percentageAssigned)]
 	commandlogfile.write('%s\n' % cmd)
 	run_cmd(cmd)
 

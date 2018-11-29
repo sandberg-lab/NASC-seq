@@ -1,5 +1,3 @@
-#!/mnt/kauffman/hendgert/Programs/R/R-3.5.1/bin/Rscript
-
 #v0.0005
 
 ## Usage cellQC rds_file_locations outdir

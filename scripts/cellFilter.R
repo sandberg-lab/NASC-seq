@@ -1,4 +1,3 @@
-#!/mnt/kauffman/hendgert/Programs/R/R-3.5.1/bin/Rscript
 # V0.002
 ## Usage cellFilter.R infile outfile totalReads assignedReads percentageAssigned numberofHighExprGenes
 ## Produces list of cells that pass QC filter

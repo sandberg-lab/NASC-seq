@@ -1,5 +1,3 @@
-#!/mnt/kauffman/hendgert/Programs/R/R-3.5.1/bin/Rscript
-
 ## Alternative to VCF file usage. Instead using conversion rates per position...
 ## V0.000001
 ## Usage vcfFilter filedir outdir posratioCutoff cellnumberCutoff
