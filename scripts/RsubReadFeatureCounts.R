@@ -1,4 +1,4 @@
-#!/mnt/kauffman/hendgert/Programs/R/R-3.5.1/bin/Rscript
+#!Rscript
 
 ## Calls on Chris' installation of R and Rscript (which is version 3.4.3)
 args <- commandArgs(trailingOnly=TRUE)
