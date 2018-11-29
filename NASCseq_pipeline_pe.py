@@ -307,7 +307,7 @@ if o.flag=='prepareData':
 			pe_file = open(os.path.join(o.experimentdir,qcfiles,p_e,cellname+'_p_e.txt'))
 			pe_estimate = pe_file.read().split('\n')[0]
 			outfile = os.path.join(pickle_outdir,cellname+'_prepared.pkl')
-			cmd = ['python3',rootDir,'scripts/prepare_pickles.py',cell,outfile,pe_estimate,cellname]
+			cmd = ['python3',os.path.join(rootDir,'scripts/prepare_pickles.py'),cell,outfile,pe_estimate,cellname]
 			cmds.append(cmd)
 	print (cmds)
 	Parallel(n_jobs=int(o.numCPU))(delayed(run_cmd)(cmd) for cmd in cmds)
