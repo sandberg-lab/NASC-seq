@@ -50,7 +50,7 @@ if __name__ == "__main__":
     pickle_list_file = sys.argv[1]
     outdir = sys.argv[2]
     stanFile = sys.argv[3]
-    model = pystan.StanModel(file=stanFile)
+    model = pystan.StanModel(file=stanFile,verbose=True)
     with open(pickle_list_file) as f:
         pickle_list = f.readlines()
         print (pickle_list)
