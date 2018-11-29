@@ -147,7 +147,7 @@ if o.flag=='removeduplicates' or o.flag=='all':
 		commandlogfile.write('%s\n' % cmd)
 	print ("Duplicate reads have been removed")
 
-if o.flag=='index' or o.flag=='all':
+if o.flag=='removeduplicates' or o.flag=='all':
   cmds = []
   for cell in glob.glob(os.path.join(o.experimentdir,bamfiles,removedup,'*/*_removeDupl.bam')):
     cmd = ['samtools index',cell]
@@ -173,7 +173,7 @@ if o.flag=='annotate' or o.flag=='all':
 		commandlogfile.write('%s\n' % cmd)
 	print ("First pass Feature counting and BAM annotation finished")
 
-if o.flag=='sortindex' or o.flag=='all':
+if o.flag=='annotate' or o.flag=='all':
 	print('Sorting and indexing using Samtools...')
 	safe_mkdir(os.path.join(o.experimentdir,bamfiles,annotatedsortedfiles))
 	cmds = []
@@ -193,7 +193,7 @@ if o.flag=='sortindex' or o.flag=='all':
 		commandlogfile.write('%s\n' % cmd)
 	print ("Indexing of bam files has been completed")
 
-if o.flag=='v3conv_tag' or o.flag=='all':
+if o.flag=='conversiontag' or o.flag=='all':
 	print ('Adding conversion information to tags in bamfiles')
 	cmds = []
 	safe_mkdir(os.path.join(o.experimentdir,bamfiles,taggedfiles))
@@ -222,7 +222,7 @@ if o.flag=='vcfFilter':
 	commandlogfile.write('%s\n' % cmd)
 	run_cmd(cmd)
 
-if o.flag=='tagfilter':
+if o.flag=='tagFilter':
 	cmds=[]
 	print ('Refining positions considered as conversions based on snp-filter and paired-end overlaps...')
 	safe_mkdir(os.path.join(o.experimentdir,bamfiles,filterTaggedFiles))
@@ -239,7 +239,7 @@ if o.flag=='tagfilter':
 		commandlogfile.write('%s\n' % cmd)
 	print ("Filtered conversions to remove potential SNPs and overcounting")
 
-if o.flag=='filterIndex':
+if o.flag=='tagFilter':
 	cmds=[]
 	print ("Indexing filtered and tagged bamfiles...")
 	for cell in glob.glob(os.path.join(o.experimentdir,bamfiles,filterTaggedFiles,'*/*_taggedFiltered.bam')):
@@ -296,7 +296,7 @@ if o.flag=='calculatePE':
 		commandlogfile.write('%s\n' % cmd)
 	print ("Pe has been calculated for all cells that passed filter.")
 
-if o.flag=='prepare_pickles':
+if o.flag=='prepareData':
 	pickle_outdir = os.path.join(o.experimentdir,outfiles,pkl_files)
 	safe_mkdir(os.path.join(o.experimentdir,outfiles))
 	safe_mkdir(pickle_outdir)
@@ -313,7 +313,7 @@ if o.flag=='prepare_pickles':
 	Parallel(n_jobs=int(o.numCPU))(delayed(run_cmd)(cmd) for cmd in cmds)
 	for cmd in cmds:
 		commandlogfile.write('%s\n' % cmd)
-	print ("Pickles have been prepared for AWS-based processing...")
+	print ("Data has been prepared for scalable processing...")
 
 
 ## Optional pipeline components
