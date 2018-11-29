@@ -122,7 +122,7 @@ if o.flag=='align' or o.flag=='all':
   Parallel(n_jobs=int(o.numCPU/4))(delayed(run_cmd)(cmd) for cmd in cmds)
   for cmd in cmds:
     commandlogfile.write('%s\n' % cmd)
-  print ("All fastq files have been aligned to genome %r") %genomeversion
+  print ("All fastq files have been aligned to genome found in %r") %gnv
 
 if o.flag=='removegenome' or o.flag=='all':
   cmd = [starDist,'--genomeLoad Remove','--genomeDir', gnv]
