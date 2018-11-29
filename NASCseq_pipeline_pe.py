@@ -105,7 +105,6 @@ if o.flag=='align' or o.flag=='all':
   safe_mkdir(os.path.join(o.experimentdir,bamfiles,aligndir))
   cmd1 = [starDist,'--genomeLoad LoadAndExit','--genomeDir',gnv,'--limitBAMsortRAM 150000000000']
   cmds = []
-  safe_mkdir(os.path.join(o.experimentdir,aligndir))
   for cell in glob.glob(os.path.join(o.experimentdir,fastqfiles,trimfiles,'*')):
     cellname='_'.join(os.path.basename(cell).split("_")[:3])
     safe_mkdir(os.path.join(o.experimentdir,bamfiles,aligndir,cellname))
@@ -268,7 +267,7 @@ if o.flag=='cellQC':
 if o.flag=='cellFilter':
 	safe_mkdir(os.path.join(o.experimentdir,qcfiles,))
 	safe_mkdir(os.path.join(o.experimentdir,qcfiles,cellFilter))
-	print ('Filtering cells based on filter variables in config.py')
+	print ('Filtering cells based on filter variables in config.py')	
 	cmds=[]
 	infile=os.path.join(o.experimentdir,qcfiles,featurecountQC,'QC_data_featureCounts.rds')
 	outfile=os.path.join(o.experimentdir,qcfiles,cellFilter,'cellFilter.txt')
