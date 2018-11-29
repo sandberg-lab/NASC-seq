@@ -1,4 +1,4 @@
- 
+
 data {
   int<lower=0> reads;
   int<lower=0> content[reads];
@@ -6,7 +6,7 @@ data {
   real<lower=0, upper=1> p_c;
   real<lower=0, upper=1> p_e;
 }
- 
+
 parameters {
   real<lower=-3, upper=3> alpha_logged;
   real<lower=-3, upper=3> beta_logged;

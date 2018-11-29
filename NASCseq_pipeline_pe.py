@@ -33,6 +33,12 @@ def cellNameExtration(filename):
 	cellname='_'.join(os.path.basename(cell).split('_')[:3])
 	return cellname
 
+def makePickleList(directory,file):
+        pklFileList = glob.glob(os.path.join(directory,'*.pkl'))
+        with open(file, 'w') as f:
+            for pkl in pklFileList:
+                f.write("%s\n" % pkl)
+
 execfile(os.path.join(o.experimentdir,'config.py'))
 print ('config.py found in: %r')%os.path.join(o.experimentdir,'config.py')
 
@@ -47,6 +53,7 @@ gnv=experimentInfo['gnv']
 gtf=experimentInfo['gtf']
 sjdb=experimentInfo['sjdb']
 strandFile=experimentInfo['strandFile']
+stanFile=experimentInfo['stanFile']
 
 ## Distributions of dependencies
 rootDir=distributions['rootDir']
@@ -315,5 +322,12 @@ if o.flag=='prepareData':
 		commandlogfile.write('%s\n' % cmd)
 	print ("Data has been prepared for scalable processing...")
 
-
-
+if o.flag=='processPickles':
+	safe_mkdir(os.path.join(o.experimentdir,outfiles,'outPickles'))
+	pklfile = os.path.join(o.experimentdir,outfiles,'PklList.txt')
+	indir = os.path.join(o.experimentdir,outfiles,pklfile)
+	makePickleList(indir,pklfile)
+	outfile = os.path.join(o.experimentdir,outfiles,'pi_g_results_.pkl')
+	logfile_pi_g = os.path.join(o.experimentdir,outfiles,'logfile_.txt')
+	cmd=['python3', os.path.join(rootDir,'estimate_pi_g_STAN_forAWS.py'),pklfile,outfile,'>',logfile_pi_g]
+	run_cmd(cmd)
