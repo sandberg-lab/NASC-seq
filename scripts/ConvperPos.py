@@ -149,7 +149,7 @@ def addTags(bamfilename, outputname):
     bamfile = pysam.AlignmentFile(bamfilename, 'rb')
     #vcf_reader = vcf.Reader(filename=vcf_filename, compressed=True)
     mod_bamfile = pysam.AlignmentFile(outputname, mode='wb',template=bamfile)
-    strandedness = pd.read_csv('strandedness.csv', header=None, index_col=0)
+    strandedness = pd.read_csv(strandednessfile, header=None, index_col=0)
     for read in bamfile.fetch():
         try:
             tags = convInRead(read)#, vcf_reader)
@@ -175,6 +175,7 @@ if __name__ == "__main__":
     outdir = sys.argv[2]
     outdir1 = sys.argv[3]
     cell_id = sys.argv[4]
+    strandednessfile = sys.argv[5]
     print('Adding tags to {}'.format(cell_id))
     addTags(ifile,outdir)
     #index outputed bamfile out of pipeline for lazyiness reason
