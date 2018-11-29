@@ -54,13 +54,13 @@ if __name__ == "__main__":
     with open(pickle_list_file) as f:
         pickle_list = f.readlines()
         print (pickle_list)
-    pickle_list = [pickle.strip() for pickle in pickle_list]
+    pickle_list = [pikl.strip() for pikl in pickle_list]
     print (pickle_list)
     dict_list = []
     for pkl in pickle_list:
         print('Loading in {}'.format(pkl))
-        dict = pickle.load(open(pkl, 'rb'))
-        dict_list.append(dict)
+        dic = pickle.load(open(pkl, 'rb'))
+        dict_list.append(dic)
 
     params = Parallel(n_jobs=72, verbose = 3)(delayed(estim_pi_g)(gene_key, gene, model) for (gene_key,gene) in iter_over_dicts(dict_list))
     master_dict = {}
