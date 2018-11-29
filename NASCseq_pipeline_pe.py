@@ -329,5 +329,5 @@ if o.flag=='processData':
 	makePickleList(indir,pklfile)
 	outfile = os.path.join(o.experimentdir,outfiles,'pi_g_results_.pkl')
 	logfile_pi_g = os.path.join(o.experimentdir,outfiles,'logfile_.txt')
-	cmd=['python3', os.path.join(rootDir,'scripts/estimate_pi_g_STAN_forAWS.py'),pklfile,outfile,'>',logfile_pi_g]
+	cmd=['python3', os.path.join(rootDir,'scripts/estimate_pi_g_STAN_forAWS.py'),pklfile,outfile,stanFile,'>',logfile_pi_g]
 	run_cmd(cmd)
