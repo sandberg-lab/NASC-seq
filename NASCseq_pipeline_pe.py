@@ -53,7 +53,7 @@ trimgaloreDist=distributions['trimgaloreDist']
 starDist=distributions['starDist']
 picardDist=distributions['picardDist']
 javaDist=distributions['javaDist']
-
+RscriptDist=distributions['RscriptDist']
 ## Standard directory/filenames
 fastqfiles='fastqFiles'
 trimfiles='trimmedFastqFiles'
@@ -166,7 +166,7 @@ if o.flag=='annotate' or o.flag=='all':
 		cellname='_'.join(os.path.basename(cell).split("_")[:3])
 		outpath = os.path.join(o.experimentdir,bamfiles,annotatedfiles,cellname)
 		safe_mkdir(outpath)
-		cmd = [os.path.join(rootDir,'scripts/RsubReadFeatureCounts.R'),cell, gtf, outpath]
+		cmd = [RscriptDist,os.path.join(rootDir,'scripts/RsubReadFeatureCounts.R'),cell, gtf, outpath]
 		cmds.append(cmd)
 	Parallel(n_jobs=int(o.numCPU))(delayed(run_cmd)(cmd) for cmd in cmds)
 	for cmd in cmds:
