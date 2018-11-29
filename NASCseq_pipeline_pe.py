@@ -288,7 +288,7 @@ if o.flag=='calculatePE':
 		if cellListCheck(cellname,o.experimentdir):
 			outfile=os.path.join(o.experimentdir,qcfiles,errorRates,cellname+'_ErrorRates.csv')
 			outfile2=os.path.join(o.experimentdir,qcfiles,p_e,cellname+'_p_e.txt')
-			cmd=['python2',os.path.join(rootDir,'scripts/PECalculation_GJH.py'),cell,outfile,outfile2]
+			cmd=['python2.7',os.path.join(rootDir,'scripts/PECalculation_GJH.py'),cell,outfile,outfile2]
 			cmds.append(cmd)
 	if verbose: print(" ".join(cmds))
 	Parallel(n_jobs=int(o.numCPU))(delayed(run_cmd)(cmd) for cmd in cmds)
