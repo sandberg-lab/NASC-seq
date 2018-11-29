@@ -1,4 +1,4 @@
-#!Rscript
+#!/home/ec2-user/programs/R-3.5.1/bin/Rscript
 
 ## Calls on Chris' installation of R and Rscript (which is version 3.4.3)
 args <- commandArgs(trailingOnly=TRUE)
