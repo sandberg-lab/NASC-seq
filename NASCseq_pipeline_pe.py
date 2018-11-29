@@ -14,7 +14,6 @@ if __name__ == "__main__":
     parser.add_argument('-e', '--experimentdir', required=True)
     parser.add_argument('-p', '--numCPU', required=True, type=int)
     parser.add_argument('-f', '--flag',type=str)
-    parser.add_argument('-n', '--ensemblID',type=str)
     o = parser.parse_args()
 
 def safe_mkdir(f):
@@ -331,3 +330,28 @@ if o.flag=='processData':
 	logfile_pi_g = os.path.join(o.experimentdir,outfiles,'logfile_.txt')
 	cmd=['python3', os.path.join(rootDir,'scripts/estimate_pi_g_STAN_forAWS.py'),pklfile,outfile,stanFile,'>',logfile_pi_g]
 	run_cmd(cmd)
+
+if o.flag=='summarize':
+        readcountRDS = os.path.join(o.experimentdir,qcfiles,featurecountQC,'Counttable*.rds')
+        readcountOut = os.path.join(o.experimentdir,outfiles,'readCounts.csv')
+        cmd0 = [RscriptDist os.path.join(rootDir,'/scripts/convertRdsCountable.R'),readcountRDS,readcountOut]
+        run_cmd(cmd0)
+        indir = os.path.join(o.experimentdir,outfiles,'resultfiles','*')
+        outfile = os.path.join(o.experimentdir,outfiles,'resultfile_pickles.txt')
+        makePickleList(indir,outfile)
+        outfile2 = os.path.join(o.experimentdir,outfiles,'exp17E')
+        readcounts = os.path.join(o.experimentdir)
+        cmds=[]
+        cmd1 = ['python3', os.path.join(rootDir,'scripts/separateTranscriptomes_dicts.py'),outfile,readcountOut,outfile2]
+        cmds.append(cmd1)
+        cmd2 = ['python3', os.path.join(rootDir,'scripts/getParamTable.py'),outfile,'pi_g','mean',outfile2]
+        cmds.append(cmd2)
+        cmd3 = ['python3', os.path.join(rootDir,'scripts/getParamTable.py'),outfile,'pi_g','sd',outfile2]
+        cmds.append(cmd3)
+        cmd4 = ['python3', os.path.join(rootDir,'scripts/getParamTable.py'),outfile,'pi_g','2.5%',outfile2]
+        cmds.append(cmd4)
+        cmd5 = ['python3', os.path.join(rootDir,'scripts/getParamTable.py'),outfile,'pi_g','97.5%',outfile2]
+        cmds.append(cmd5)
+        cmd6 = ['python3', os.path.join(rootDir,'scripts/getModeTable.py'),outfile,outfile2]
+        cmds.append(cmd6)
+        Parallel(n_jobs=6)(delayed(run_cmd)(cmd) for cmd in cmds)
