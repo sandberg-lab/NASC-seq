@@ -202,7 +202,7 @@ if o.flag=='v3conv_tag' or o.flag=='all':
 		safe_mkdir(os.path.join(o.experimentdir,bamfiles,taggedfiles,cellname))
 		outfile = os.path.join(o.experimentdir,bamfiles,taggedfiles,cellname,cellname+'_PositionTagged.bam')
 		outfile2 = os.path.join(o.experimentdir,bamfiles,taggedfiles,cellname,cellname+'_PosTag.csv')
-		cmd = ['python2', os.path.join(rootDir,'scripts/ConvperPos.py'),cell,outfile,outfile2,cellname]
+		cmd = ['python2.7', os.path.join(rootDir,'scripts/ConvperPos.py'),cell,outfile,outfile2,cellname]
 		cmds.append(cmd)
 	if verbose: print(" ".join(cmds))
 	Parallel(n_jobs=int(o.numCPU))(delayed(run_cmd)(cmd) for cmd in cmds)
