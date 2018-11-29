@@ -99,14 +99,14 @@ While running the pipeline a number of fastq files as well as bam files will be 
 The folders will contain the following partially processed datafiles:
     
 ```
-Experimentdir
-    bamFiles
-        aligned_bam             STAR output
-        duplRemoved_bam         PICARD duplicate removal output
-        annotated_bam           Rsubread annotated output
-        annotated_sorted_bam    Sorted Rsubread annotated output
-        tagged_bam              Conversion-tagged output
-        filteredTagged_bam      SNP-filtered conversion-tagged output
+  Experimentdir
+      bamFiles
+          aligned_bam             STAR output
+          duplRemoved_bam         PICARD duplicate removal output
+          annotated_bam           Rsubread annotated output
+          annotated_sorted_bam    Sorted Rsubread annotated output
+          tagged_bam              Conversion-tagged output
+          filteredTagged_bam      SNP-filtered conversion-tagged output
 ```
     
 ## Example Data
