@@ -1,5 +1,15 @@
 # NASC-seq analysis pipeline
-## Dependencies
+
+## System Requirements
+
+No custom hardware was used, but the use of a computing cluster is recommended.
+Running time for the entire pipeline for a single cell on a desktop computer is estimated at 24 hours.
+To facilitate easy implementation and rapid processing we suggest to move the entire analysis pipeline to an EC2 instance from Amazon Web Services (AWS). We have preloaded an Amazon Machine Image (AMI) with the code, dependencies, hg38, and sample data (AMI-XXXXXXXX).
+
+## Software Dependencies
+
+The analysis pipeline has been tested with the following supporting software.
+
 ```
 R 3.5.1
 STAR (2.5.4b)
@@ -22,6 +32,7 @@ tidyr 0.8.2 (R-package)
 dplyr 0.7.8 (R-package)
 cowplot 0.9.3 (R-package)
 ```
+
 ## Usage
 
   -h, --help                        show this help message and exit
@@ -56,24 +67,30 @@ cowplot 0.9.3 (R-package)
     
     prepareData                     Prepares pickles from data for scalable processing using AWS or similar
 
+## Installation
+
+The git repository can be cloned directly (<1 minute). 
+
 ## Directory Structure
 
 Raw fastq files (paired-end, 2x 150 cycles) should be moved to the following directories:
     
-    ```
-        Experimentdir
-            fastqFiles
-                rawdata
-                    P1_A01_S1 (Plate1, Row A, column 01)
-                        ...R1.fastq.gz
-                        ...R2.fastq.gz
-                    P1_A02_S2
-                        ...R1.fastq.gz
-                        ...R2.fastq.gz
-                    ...
-    ```
-    
-A configuration file should be prepared in the root of the experiment directory. For an example configuration file see .../NASC-seq/data/config_example.py
+```
+    Experimentdir
+        fastqFiles
+            rawdata
+                P1_A01_S1 (Plate1, Row A, column 01)
+                    ...R1.fastq.gz
+                    ...R2.fastq.gz
+                P1_A02_S2
+                    ...R1.fastq.gz
+                    ...R2.fastq.gz
+                ...
+```
+## Performing NASC-seq analysis
+
+A configuration file should be prepared in the root of the experiment directory. For the layout of the configuration file see the example config file (/NASC-seq/data/config_example.py). In addition to the locations of some of the dependencies, users will have to refer to a genome using STAR (gnv), a gtf file (gtf) and an SJBD file (sjdb) to facilitate memory sharing while aligning. The config file furthermore includes links to a file with strand information for all features in the genome (strandFile), a stan model file (stanFile).
+
 
 ## Output
 
@@ -81,16 +98,16 @@ While running the pipeline a number of fastq files as well as bam files will be 
 
 The folders will contain the following partially processed datafiles:
     
-    ```
-    Experimentdir
-        bamFiles
-            aligned_bam             STAR output
-            duplRemoved_bam         PICARD duplicate removal output
-            annotated_bam           Rsubread annotated output
-            annotated_sorted_bam    Sorted Rsubread annotated output
-            tagged_bam              Conversion-tagged output
-            filteredTagged_bam      SNP-filtered conversion-tagged output
-    ```
+```
+  Experimentdir
+      bamFiles
+          aligned_bam             STAR output
+          duplRemoved_bam         PICARD duplicate removal output
+          annotated_bam           Rsubread annotated output
+          annotated_sorted_bam    Sorted Rsubread annotated output
+          tagged_bam              Conversion-tagged output
+          filteredTagged_bam      SNP-filtered conversion-tagged output
+```
     
 ## Example Data
 
