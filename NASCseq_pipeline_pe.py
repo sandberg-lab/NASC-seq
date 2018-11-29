@@ -46,7 +46,7 @@ aligndir=experimentInfo['aligndir']
 gnv=experimentInfo['gnv']
 gtf=experimentInfo['gtf']
 sjdb=experimentInfo['sjdb']
-strandfile=experimentInfo['strandFile']
+strandFile=experimentInfo['strandFile']
 
 ## Distributions of dependencies
 rootDir=distributions['rootDir']
