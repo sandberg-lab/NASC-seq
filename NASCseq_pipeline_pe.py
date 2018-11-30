@@ -335,7 +335,7 @@ if o.flag=='summarize':
 	safe_mkdir(os.path.join(o.experimentdir,outfiles,'summary'))
 	readcountRDS = os.path.join(o.experimentdir,qcfiles,featurecountQC,'Counttable*.rds')
 	readcountOut = os.path.join(o.experimentdir,outfiles,'readCounts.csv')
-	cmd0 = [RscriptDist, os.path.join(rootDir,'/scripts/convertRdsCountable.R'),readcountRDS,readcountOut]
+	cmd0 = [RscriptDist, os.path.join(rootDir,'scripts/convertRdsCountable.R'),readcountRDS,readcountOut]
 	run_cmd(cmd0)
 	indir = os.path.join(o.experimentdir,outfiles,'outPickles','*')
 	outfile = os.path.join(o.experimentdir,outfiles,'resultfile_pickles.txt')
