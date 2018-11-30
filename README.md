@@ -59,13 +59,18 @@ cowplot 0.9.3 (R-package)
     
     tagFilter                       Remove SNPs from conversion tags and index files
     
-    cellQC                          Perform basic QC visualization to decide on QC cutoffs
+    cellQC                          Perform basic QC visualization to decide on QC cutoffs. This can be used
+                                    to decide on quality cutoffs that can be added to the config.py file.
     
     cellFilter                      Filter bam files based on QC cutoffs in the config.py file
     
     calculatePE                     Calculate error probability
     
     prepareData                     Prepares pickles from data for scalable processing using AWS or similar
+    
+    summarize                       Summarize corrected data and prepare files with new and old reads as well as 
+                                    additional files with the modes of the estimates, the confidence intervals, 
+                                    the standard deviations and the means.
 
 ## Installation
 
@@ -91,6 +96,7 @@ Raw fastq files (paired-end, 2x 150 cycles) should be moved to the following dir
 
 A configuration file should be prepared in the root of the experiment directory. For the layout of the configuration file see the example config file (/NASC-seq/data/config_example.py). In addition to the locations of some of the dependencies, users will have to refer to a genome using STAR (gnv), a gtf file (gtf) and an SJBD file (sjdb) to facilitate memory sharing while aligning. The config file furthermore includes links to a file with strand information for all features in the genome (strandFile), a stan model file (stanFile).
 
+Running the analysis can be done step-by-step by following the flags in the order presented under 'Usage'. When rerunning the analysis on the example data, exclude the 'vcfFilter' step since this depends on the availability of broader data (i.e. a position is excluded when it is found converted in many cells). Instead, the supplied result of this step in the QC/vcfFilter folder can be used to remove potential SNPs from the example data.
 
 ## Output
 
@@ -111,6 +117,9 @@ The folders will contain the following partially processed datafiles:
     
 ## Example Data
 
-### Scalable data processing
+Example data can be downloaded from: https://drive.google.com/open?id=1EeuvVTLS3HT852bl-EMljGeNwZjB5rgr.
 
-To facilitate rapid processing and easy implementation we suggest to run the entire pipeline on Amazon Web Services
+## Scalable data processing
+
+To facilitate rapid processing and easy implementation we suggest to run the entire pipeline on Amazon Web Services.
+We provide an Amazon Machine Image (AMI) with all code, dependencies, hg38 and example data preloaded. 
