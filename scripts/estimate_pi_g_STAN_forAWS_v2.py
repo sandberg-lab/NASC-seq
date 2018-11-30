@@ -58,7 +58,7 @@ if __name__ == "__main__":
         dict = pickle.load(open(pkl, 'rb'))
         dict_list.append(dict)
 
-    params = Parallel(n_jobs=72, verbose = 3)(delayed(estim_pi_g)(gene_key, gene, model) for (gene_key,gene) in iter_over_dicts(dict_list))
+    params = Parallel(n_jobs=int(sys.argv[4]), verbose = 3)(delayed(estim_pi_g)(gene_key, gene, model) for (gene_key,gene) in iter_over_dicts(dict_list))
     master_dict = {}
     for key, df in params:
         if df is not None:
