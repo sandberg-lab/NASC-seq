@@ -237,7 +237,7 @@ if o.flag=='tagFilter':
 		safe_mkdir(os.path.join(o.experimentdir,bamfiles,filterTaggedFiles,cellname))
 		outfile=os.path.join(o.experimentdir,bamfiles,filterTaggedFiles,cellname,cellname+'_taggedFiltered.bam')
 		inposfile=os.path.join(o.experimentdir,qcfiles,vcfFilter,'posfile.csv')
-		cmd=['python2', os.path.join(rootDir,'scripts/filter_reads_paired.py'),cell,outfile,inposfile]
+		cmd=['python2.7', os.path.join(rootDir,'scripts/filter_reads_paired.py'),cell,outfile,inposfile]
 		cmds.append(cmd)
 	if verbose: print(" ".join(cmds))
 	Parallel(n_jobs=int(o.numCPU))(delayed(run_cmd)(cmd) for cmd in cmds)
