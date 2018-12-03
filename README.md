@@ -45,7 +45,7 @@ cowplot 0.9.3 (R-package)
 
     trim                            Trim fastq files using trimgalore
     
-    align                           Align fastq files using STAR to hg38
+    align                           Align fastq files using STAR to hg38 (uses 4 threads / cell)
     
     removegenome                    Removes genome from shared memory
     
@@ -57,7 +57,7 @@ cowplot 0.9.3 (R-package)
     
     vcfFilter                       Select possible SNPs from shared mismatches between cells
     
-    tagFilter                       Remove SNPs from conversion tags and index files
+    tagFilter                       Remove SNPs from conversion tags and index files (uses 1 thread / cell)
     
     cellQC                          Perform basic QC visualization to decide on QC cutoffs. This can be used
                                     to decide on quality cutoffs that can be added to the config.py file.
@@ -67,6 +67,10 @@ cowplot 0.9.3 (R-package)
     calculatePE                     Calculate error probability
     
     prepareData                     Prepares pickles from data for scalable processing using AWS or similar
+    
+    processData                     Processes pickles and creates output pickle which will be used for data summarization
+                                    Will process 1 cell at a time on the given number of threads (-p / --numCPU), and loop
+                                    over all cells in the prepared data.
     
     summarize                       Summarize corrected data and prepare files with new and old reads as well as 
                                     additional files with the modes of the estimates, the confidence intervals, 
