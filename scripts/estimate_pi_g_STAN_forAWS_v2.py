@@ -64,7 +64,7 @@ if __name__ == "__main__":
         if df is not None:
             both_keys = key.split('_')
             gene_key = both_keys[0]
-            cell_key = both_keys[1]
+            cell_key = '_'.join(both_keys[1:])
             if cell_key in master_dict:
                 master_dict[cell_key][gene_key] = df
             else:

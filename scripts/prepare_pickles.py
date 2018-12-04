@@ -24,7 +24,7 @@ def createAkng(Bamfile, cell_id):
     SC = {}
     TC = {}
     for read in Bamfile.fetch():
-        g='{}-{}'.format(read.get_tag('XT'), cell_id)
+        g='{}_{}'.format(read.get_tag('XT'), cell_id)
         if read.get_tag('ST') == '+':
             k=parseSCTag(read)[('t','C')]
             n=parseTCTag(read)['t']
