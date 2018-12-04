@@ -337,7 +337,7 @@ if o.flag=='summarize':
 	readcountOut = os.path.join(o.experimentdir,outfiles,'readCounts.csv')
 	cmd0 = [RscriptDist, os.path.join(rootDir,'scripts/convertRdsCountable.R'),readcountRDS,readcountOut]
 	run_cmd(cmd0)
-	indir = os.path.join(o.experimentdir,outfiles,'outPickles','*')
+	indir = os.path.join(o.experimentdir,outfiles,'outPickles')
 	outfile = os.path.join(o.experimentdir,outfiles,'resultfile_pickles.txt')
 	makePickleList(indir,outfile)
 	outfile2 = os.path.join(o.experimentdir,outfiles,'summary')
