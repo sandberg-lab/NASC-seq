@@ -4,7 +4,7 @@
 
 No custom hardware was used, but the use of a computing cluster is recommended.
 Running time for the entire pipeline for a single cell on a desktop computer is estimated at 24 hours.
-To facilitate easy implementation and rapid processing we suggest to move the entire analysis pipeline to an EC2 instance from Amazon Web Services (AWS). We have preloaded an Amazon Machine Image (AMI) with the code, dependencies, hg38, and sample data (AMI-XXXXXXXX).
+To facilitate easy implementation and rapid processing we suggest to move the entire analysis pipeline to an EC2 instance from Amazon Web Services (AWS). We have preloaded an Amazon Machine Image (AMI) with the code, dependencies, hg38, and sample data (ami-017ee38866159d2d8).
 
 ## Software Dependencies
 
@@ -126,4 +126,4 @@ Example data can be downloaded from: https://drive.google.com/open?id=1EeuvVTLS3
 ## Scalable data processing
 
 To facilitate rapid processing and easy implementation we suggest to run the entire pipeline on Amazon Web Services.
-We provide an Amazon Machine Image (AMI) with all code, dependencies, hg38 and example data preloaded. 
+We provide an Amazon Machine Image (ami-017ee38866159d2d8) with all code, dependencies, hg38 and example data preloaded. 
