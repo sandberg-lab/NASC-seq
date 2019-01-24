@@ -121,16 +121,28 @@ if __name__ == "__main__":
     outdir = sys.argv[2]
     p_e = float(sys.argv[3])
     cell_id = sys.argv[4]
+    p_c = -1
+    if len(sys.argv) == 6:
+        p_c = float(sys.argv[5])
     Bam = pysam.AlignmentFile(ifile)#'P1_test_stranded.bam'
-    try:
-        print('Estimating p_c in {}'.format(ifile))
-        SC, TC, p_c, p_e = estimateP_c(p_e,Bam, cell_id)
-        print('Estimated p_c is {}'.format(p_c))
+    if p_c == -1:
+
+        try:
+            print('Estimating p_c in {}'.format(ifile))
+            SC, TC, p_c, p_e = estimateP_c(p_e,Bam, cell_id)
+            print('Estimated p_c is {}'.format(p_c))
+            concatenated_dict = {}
+            for g in SC.keys():
+                concatenated_dict[g] = {'SC': SC[g], 'TC': TC[g], 'p_c': p_c, 'p_e':p_e}
+            print('Saving prepared data to {}'.format(outdir))
+            pickle.dump(concatenated_dict, open(outdir, 'wb'))
+        except RuntimeError:
+            p_c = -1
+            print('{} failed'.format(ifile))
+    else:
         concatenated_dict = {}
+        Akng, SC, TC=createAkng(Bam, cell_id)
         for g in SC.keys():
             concatenated_dict[g] = {'SC': SC[g], 'TC': TC[g], 'p_c': p_c, 'p_e':p_e}
         print('Saving prepared data to {}'.format(outdir))
         pickle.dump(concatenated_dict, open(outdir, 'wb'))
-    except RuntimeError:
-        p_c = -1
-        print('{} failed'.format(ifile))
