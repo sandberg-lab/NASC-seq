@@ -21,21 +21,26 @@ import pickle
 from joblib import Parallel, delayed
 
 def formatData(SC_g, TC_g, p_c_cell, p_e_cell):
+    if len(SC_g) > 10000:
+        random_reads = np.random.choice(len(SC_g), 10000, replace=False)
+        SC_g = SC_g[random_reads]
+        TC_g = TC_g[random_reads]
     return {'reads' : len(SC_g), 'content' : np.int_(TC_g), 'conversions' : np.int_(SC_g), 'p_c' : p_c_cell, 'p_e' : p_e_cell}
-
+    
 def init_fun(dictionary):
     return [dictionary for i in np.arange(4)]
 
 def estim_pi_g(gene_key,gene, model):
             print('Estimating {}'.format(gene_key))
             data = formatData(gene['SC'], gene['TC'], gene['p_c'], gene['p_e'])
-            if data['reads'] >= 16 and data['reads'] <= 10000:
+            if data['reads'] >= 16:
                 fit =  model.sampling(data=data, n_jobs=1, seed=194838, init=init_fun({'alpha_logged':0, 'beta_logged':0, 'pi_g':0.5}))
                 s = fit.summary()
                 summary = pd.DataFrame(s['summary'], columns=s['summary_colnames'], index=s['summary_rownames'])
-                return gene_key,summary
+                return gene_key, summary
             else:
-                return None, None
+                return None,None
+
 def iter_over_dicts(dict_list):
     for dictionary in dict_list:
         for key, value in dictionary.items():

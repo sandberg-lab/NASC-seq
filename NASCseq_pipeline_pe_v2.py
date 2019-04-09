@@ -14,6 +14,7 @@ if __name__ == "__main__":
     parser.add_argument('-e', '--experimentdir', required=True)
     parser.add_argument('-p', '--numCPU', required=True, type=int)
     parser.add_argument('-f', '--flag',type=str)
+    parser.add_argument('-s', '--stablePC',type=str,required=False)
     o = parser.parse_args()
 
 def safe_mkdir(f):
@@ -313,7 +314,7 @@ if o.flag=='prepareData':
 			pe_file = open(os.path.join(o.experimentdir,qcfiles,p_e,cellname+'_p_e.txt'))
 			pe_estimate = pe_file.read().split('\n')[0]
 			outfile = os.path.join(pickle_outdir,cellname+'_prepared.pkl')
-			cmd = ['python3',os.path.join(rootDir,'scripts/prepare_pickles.py'),cell,outfile,pe_estimate,cellname]
+			cmd = ['python3',os.path.join(rootDir,'scripts/prepare_pickles_v2.py'),cell,outfile,pe_estimate,cellname]
 			cmds.append(cmd)
 	print (cmds)
 	Parallel(n_jobs=int(o.numCPU))(delayed(run_cmd)(cmd) for cmd in cmds)
@@ -328,7 +329,7 @@ if o.flag=='processData':
 	makePickleList(indir,pklfile)
 	outfile = os.path.join(o.experimentdir,outfiles,'outPickles/pi_g_results.pkl')
 	logfile_pi_g = os.path.join(o.experimentdir,outfiles,'outPickles/logfile.txt')
-	cmd=['python3', os.path.join(rootDir,'scripts/estimate_pi_g_STAN_forAWS_v2.py'),outfile,pklfile,stanFile,str(o.numCPU),'>',logfile_pi_g]
+	cmd=['python3', os.path.join(rootDir,'scripts/estimate_pi_g_STAN_forAWS_v3.py'),outfile,pklfile,stanFile,str(o.numCPU),'>',logfile_pi_g]
 	run_cmd(cmd)
 
 if o.flag=='summarize':
@@ -340,7 +341,7 @@ if o.flag=='summarize':
 	indir = os.path.join(o.experimentdir,outfiles,'outPickles')
 	outfile = os.path.join(o.experimentdir,outfiles,'resultfile_pickles.txt')
 	makePickleList(indir,outfile)
-	outfile2 = os.path.join(o.experimentdir,outfiles,'summary')
+	outfile2 = os.path.join(o.experimentdir,outfiles,os.path.dirname(o.experimentdir).split('/')[-1])
 	readcounts = os.path.join(o.experimentdir)
 	cmds=[]
 	cmd1 = ['python3', os.path.join(rootDir,'scripts/separateTranscriptomes_dicts.py'),outfile,readcountOut,outfile2]
@@ -356,3 +357,23 @@ if o.flag=='summarize':
 	cmd6 = ['python3', os.path.join(rootDir,'scripts/getModeTable.py'),outfile,outfile2]
 	cmds.append(cmd6)
 	Parallel(n_jobs=int(o.numCPU))(delayed(run_cmd)(cmd) for cmd in cmds)
+
+
+if o.flag=='prepareData_stablePC':
+        pickle_outdir = os.path.join(o.experimentdir,outfiles,pkl_files)
+        safe_mkdir(os.path.join(o.experimentdir,outfiles))
+        safe_mkdir(pickle_outdir)
+        cmds = []
+        for cell in glob.glob(os.path.join(o.experimentdir,bamfiles,filterTaggedFiles,'*/*_taggedFiltered.bam')):
+                cellname = cellNameExtration(cell)
+                if cellListCheck(cellname,o.experimentdir):
+                        pe_file = open(os.path.join(o.experimentdir,qcfiles,p_e,cellname+'_p_e.txt'))
+                        pe_estimate = pe_file.read().split('\n')[0]
+                        outfile = os.path.join(pickle_outdir,cellname+'_prepared.pkl')
+                        cmd = ['python3',os.path.join(rootDir,'scripts/prepare_pickles.py'),cell,outfile,pe_estimate,cellname,o.stablePC]
+                        cmds.append(cmd)
+        print (cmds)
+        Parallel(n_jobs=int(o.numCPU))(delayed(run_cmd)(cmd) for cmd in cmds)
+        for cmd in cmds:
+                commandlogfile.write('%s\n' % cmd)
+        print ("Data has been prepared for scalable processing...")
