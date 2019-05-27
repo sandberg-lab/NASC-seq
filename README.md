@@ -1,5 +1,7 @@
 # NASC-seq analysis pipeline
 
+This repository contains the scripts that were used for the processing of NASC-seq data from the related manuscript (Hendriks et al. under review). This approach is based on the implementation of a binomial mixture model from the GRAND-SLAM method (Jürges et al. Bioinformatics, 2018) that was originally used for the analysis of bulk SLAM-seq data (Herzog et al. Nature Methods, 2017).
+
 ## System Requirements
 
 No custom hardware was used, but the use of a computing cluster is recommended.
