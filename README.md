@@ -6,7 +6,7 @@ This repository contains the scripts that were used for the processing of NASC-s
 
 No custom hardware was used, but the use of a computing cluster is recommended.
 Running time for the entire pipeline for a single cell on a desktop computer is estimated at 24 hours.
-To facilitate easy implementation and rapid processing we provide an Amazon Machine Image (AMI) for an instance containing the pipeline and dependecies, as well as some example data.
+To facilitate easy implementation and rapid processing we provide an Amazon Machine Image (AMI) for an instance containing the pipeline and dependecies, as well as some example data. The AMI can be found in the OHIO region and is named NASC-seq (ami-09ed874a884ac41ed).
 
 ## Software Dependencies
 
