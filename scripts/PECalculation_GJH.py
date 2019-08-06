@@ -29,7 +29,7 @@ def parseTCTag(read):
 ## \From Anton
 
 ## Run through all reads and count all conversions
-
+## Updated to avoid crashed when no ERCC reads are present...
 def errorRates(bamfilename,outfile,p_e_outfile):
 	cellname='_'.join(bamfilename.split('/')[-1].split('_')[0:3])
 	bamfile=pysam.AlignmentFile(bamfilename, 'rb')
@@ -50,13 +50,16 @@ def errorRates(bamfilename,outfile,p_e_outfile):
 	scperc=scperc.append(sc.filter(regex='c')/tc['c'])
 	scperc=scperc.append(sc.filter(regex='g')/tc['g'])
 	scperc=scperc.append(sc.filter(regex='t')/tc['t'])
-	tc_ercc=pd.DataFrame.from_dict(TC_ercc).sum(axis=0)
-	sc_ercc=pd.DataFrame.from_dict(SC_ercc).sum(axis=0)
-	scperc_ercc=sc_ercc.filter(regex='a')/tc_ercc['a']
-	scperc_ercc=scperc_ercc.append(sc_ercc.filter(regex='c')/tc_ercc['c'])
-	scperc_ercc=scperc_ercc.append(sc_ercc.filter(regex='g')/tc_ercc['g'])
-	scperc_ercc=scperc_ercc.append(sc_ercc.filter(regex='t')/tc_ercc['t'])
-	dataArray={'ConversionType':scperc.keys(),'ConversionRate':scperc,'ConversionRate_ERCC':scperc_ercc,'Cell':[cellname]*scperc.shape[0],'ReadCount':[x]*scperc.shape[0],'ReadCount_ercc':[x_ercc]*scperc.shape[0]}
+	if x_ercc > 0:
+		tc_ercc=pd.DataFrame.from_dict(TC_ercc).sum(axis=0)
+		sc_ercc=pd.DataFrame.from_dict(SC_ercc).sum(axis=0)
+		scperc_ercc=sc_ercc.filter(regex='a')/tc_ercc['a']
+		scperc_ercc=scperc_ercc.append(sc_ercc.filter(regex='c')/tc_ercc['c'])
+		scperc_ercc=scperc_ercc.append(sc_ercc.filter(regex='g')/tc_ercc['g'])
+		scperc_ercc=scperc_ercc.append(sc_ercc.filter(regex='t')/tc_ercc['t'])
+		dataArray={'ConversionType':scperc.keys(),'ConversionRate':scperc,'ConversionRate_ERCC':scperc_ercc,'Cell':[cellname]*scperc.shape[0],'ReadCount':[x]*scperc.shape[0],'ReadCount_ercc':[x_ercc]*scperc.shape[0]}
+	else:
+		dataArray={'ConversionType':scperc.keys(),'ConversionRate':scperc,'Cell':[cellname]*scperc.shape[0],'ReadCount':[x]*scperc.shape[0]}
 	df=pd.DataFrame(data=dataArray)
 	if os.path.exists(outfile):
 		print("Error Rate files are being overwritten...")
