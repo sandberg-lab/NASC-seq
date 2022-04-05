@@ -39,19 +39,21 @@ def CountReadConverPerConvPos(bam,ContigLocs):
         ConvsPerPos[key]={}
         k=0
         current=ContigLocs[key][k]
-        k+=1
-        nextone=ContigLocs[key][k]
-        while k < len(ContigLocs[key])-1:
-            ConvsPerPos[key][current]=1
-            while current == nextone and k < len(ContigLocs[key])-1:
-                k+=1
-                nextone=ContigLocs[key][k]
-                ConvsPerPos[key][current]+=1
-            current = nextone
-            if k < len(ContigLocs[key])-1:
-                k+=1
-                nextone=ContigLocs[key][k]
-
+        if len(ContigLocs[key][k]) == 1:
+            ConvsPerPos[key][current] = 1
+        else:
+            k+=1
+            nextone=ContigLocs[key][k]
+            while k < len(ContigLocs[key])-1:
+                ConvsPerPos[key][current]=1
+                while current == nextone and k < len(ContigLocs[key])-1:
+                    k+=1
+                    nextone=ContigLocs[key][k]
+                    ConvsPerPos[key][current]+=1
+                current = nextone
+                if k < len(ContigLocs[key])-1:
+                    k+=1
+                    nextone=ContigLocs[key][k]
         CoverofPosWithConvs[key]={}
         for key2 in ConvsPerPos[key].keys():
             try:
