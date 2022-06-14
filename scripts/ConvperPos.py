@@ -39,7 +39,7 @@ def CountReadConverPerConvPos(bam,ContigLocs):
         ConvsPerPos[key]={}
         k=0
         current=ContigLocs[key][k]
-        if len(ContigLocs[key][k]) == 1:
+        if len(ContigLocs[key]) == 1:
             ConvsPerPos[key][current] = 1
         else:
             k+=1
